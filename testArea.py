@@ -1,19 +1,37 @@
-import random
-class Accumulator(object):
-	"""docstring for Accumulator"""
+import sys
+sys.path.append("/home/git-base/MyPyLib/MyPyLibary/data_structure/")
+from linklist import LinkList
 
-	def __init__(self,num):
-		super(Accumulator, self).__init__()
-		self.total = 0.0
-		self.N = num
-	def addDataValue(self,value):
-		self.total += value
+class Steque(object):
+	"""docstring for Steque"""
+	def __init__(self,data=[]):
+		self.data = LinkList(data)
 
-	def mean(self):
-		return(self.total/self.N)
+
+	def push(self,item):
+		self.data.append(item)
+
+	def pop(self):
+		memo = self.data.getlength() - 1
+		self.data.delete(self.data.getlength() - 1)
+		return memo
+
+	def enqueue(self,item):
+		self.data.insert(0,item)
+
+	def size(self):
+		return self.data.getlength()
+
+if __name__ == '__main__':
+	x = Steque([1,2,3,4,5])
+	print(x.size())
+	x.push(6)
+	print(x.size())
+	print(x.pop())
+	x.enqueue(83)
+	print(x.size())
+
+
+
 
 		
-x = Accumulator(100000)
-for i in range(0,x.N):
-	x.addDataValue(random.random())
-print(x.mean())

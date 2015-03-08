@@ -15,15 +15,23 @@ class LinkList(object):
 
 	def __init__(self):
 		self.head = 0
+		self.end = 0
 
 	def initlist(self,data):
 		self.head = Node(data[0])
+		self.end = Node(data[-1])
 		p = self.head
 		for i in data[1:]:
 			node = Node(i)
 			p.next = node
 			node.prev = p
 			p = p.next
+		q = self.end
+		for i in data[-2::-1]:
+			node = Node(i)
+			q.prev = node
+			node.next = q
+			q = q.prev
 
 	def getlength(self):
 		length = 0
@@ -53,6 +61,16 @@ class LinkList(object):
 			p.next = q
 			q.prev = p
 
+	def deappend(self,item):
+		q = Node(item)
+		if self.head == 0:
+			self.end = q
+		else:
+			p = self.head
+			self.head = q
+			p.prev = q
+			q.next = p
+
 	def getitem(self,index):
 		if self.is_empty():
 			print ('Linklist is empty.')
@@ -66,6 +84,7 @@ class LinkList(object):
 			return p.data
 		else:
 			print ('target is not exist!')
+			return
 
 	def insert(self,index,item):
 		if self.is_empty() or index < 0 or index > self.getlength():
@@ -74,6 +93,7 @@ class LinkList(object):
 		if index == 0:
 			q = Node(item,self.head)
 			self.head = q
+			return
 		j = 0		
 		p = self.head
 		post  = self.head
@@ -93,8 +113,9 @@ class LinkList(object):
 			print ('Linklist is empty.')
 			return
 		if index ==0:
-			q = Node(item,self.head)
-			self.head = q
+			q = self.head
+			self.head = q.next
+			return
 		j = 0		
 		p = self.head
 		post  = self.head
@@ -105,6 +126,14 @@ class LinkList(object):
 		if index ==j:
 			post.next = p.next
 			p.next.prev = post
+
+	def delhead(self):
+		p = self.head 
+		self.head = p.next
+
+	def delend(self):
+		p = self.end
+		self.end = p.prev
 			
 	def index(self,value):
 		if self.is_empty():
@@ -120,6 +149,10 @@ class LinkList(object):
 		else:
 			return -1
 
+	def show(self):
+		for i in range(self.getlength()):
+			print(self.getitem(i))
+
 if __name__ == '__main__':
 	l=LinkList()
 	llist=[7,3,10,4,5,]
@@ -128,13 +161,16 @@ if __name__ == '__main__':
 	print(l.getlength())
 	print(l.is_empty())
 
-	# l.append(11)
-	# l.insert(2,100)
+	l.append(16)
+	l.deappend(24)
+	l.delhead()
+	l.show()
 
-	print(l.getlength())
-	print(l.getitem(0))
-	for i in range(l.getlength()):
-		print(l.index(llist[i]))
+	l.insert(0,100)
+	print(l.index(10))
+
+	print("getlength",l.getlength())
+	print(l.getitem(5))
 	l.clear()
 	print(l.getlength())
 

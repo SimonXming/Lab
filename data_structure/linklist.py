@@ -1,11 +1,10 @@
-#Personal Python Data Structure--PPDS
-# 
-#Data Structure List:
-#1.LinkList
-# 
 #
+#file name:linklist.py
+#date:2014.10.14
+#author : Simon
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
 class Node(object):
 
 
@@ -17,8 +16,16 @@ class Node(object):
 class LinkList(object):
 
 
-	def __init__(self):
-		self.head = 0
+	def __init__(self,data=[]):
+		if data ==[]:
+			self.head = 0
+		else:
+			self.head = Node(data[0])
+			p = self.head
+			for i in data[1:]:
+				node = Node(i)
+				p.next = node
+				p = p.next
 
 	def __getitem__(self,key):
 		if self.is_empty():
@@ -40,6 +47,22 @@ class LinkList(object):
 		else:
 			self.delete(key)
 			return self.insert(key)
+
+	def __iter__(self):
+		print("__iter__ called") 
+		self.append(0)
+		return self
+
+	def __next__(self):
+		if self.is_empty() :
+			print("Empty")
+			raise StopIteration  
+		else:
+			self.delete(self.getlength() - 1)
+			return self
+
+	def __str__(self):
+		return str(self.getitem(self.getlength() - 1))
 
 	def initlist(self,data):
 		self.head = Node(data[0])
@@ -97,6 +120,7 @@ class LinkList(object):
 		if index == 0:
 			q = Node(item,self.head)
 			self.head = q
+			return
 		j = 0		
 		p = self.head
 		post  = self.head
@@ -113,9 +137,10 @@ class LinkList(object):
 		if self.is_empty() or index < 0 or index > self.getlength():
 			print ('Linklist is empty.')
 			return
-		if index ==0:
-			q = Node(item,self.head)
-			self.head = q
+		if index == 0:
+			q = self.head
+			self.head = q.next
+			return
 		j = 0		
 		p = self.head
 		post  = self.head
@@ -141,22 +166,24 @@ class LinkList(object):
 			return -1
 
 if __name__ == '__main__':
-	l=LinkList()
-	llist=[7,3,10,4,5,]
-	l.initlist(llist)
-
+	l=LinkList([7,3,10,4,5])
+	# llist=[7,3,10,4,5,]
+	# l.initlist(llist)
 	print(l.getlength())
-	print(l.is_empty())
+	l.insert(0,1)
+	for i in l:
+		print(i)
+	# print(l.delete(0))
 
 	# l.append(11)
 	# l.insert(2,100)
 
-	print(l.getlength())
-	print(l.getitem(0))
-	for i in range(l.getlength()):
-		print(l.index(llist[i]))
-	l.clear()
-	print(l.getlength())
+	# print(l.getlength())
+	# print(l.getitem(0))
+	# for i in range(l.getlength()):
+	# 	print(l.index(llist[i]))
+	# l.clear()
+	# print(l.getlength())
 
 
 
