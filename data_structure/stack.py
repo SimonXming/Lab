@@ -29,7 +29,7 @@ class Stack:
 		return len(self.items) 
 
 class LinkStack:
-	"""Simple Stack data structure."""
+	"""Stack data structure base on LinkList."""
 
 	def __init__(self):
 		self.items = LinkList()

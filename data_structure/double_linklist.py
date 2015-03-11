@@ -1,7 +1,10 @@
-#Personal Python Data Structure--PPDS
 #
+#file name:double_linklist.py
+#date:2014.10.14
+#author : Simon
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
 class Node(object):
 
 
@@ -13,25 +16,26 @@ class Node(object):
 class LinkList(object):
 
 
-	def __init__(self):
+	def __init__(self,data=[]):
 		self.head = 0
 		self.end = 0
-
-	def initlist(self,data):
-		self.head = Node(data[0])
-		self.end = Node(data[-1])
-		p = self.head
-		for i in data[1:]:
-			node = Node(i)
-			p.next = node
-			node.prev = p
-			p = p.next
-		q = self.end
-		for i in data[-2::-1]:
-			node = Node(i)
-			q.prev = node
-			node.next = q
-			q = q.prev
+		if data ==[]:
+			self.head = 0
+		else:
+			self.head = Node(data[0])
+			self.end = Node(data[-1])
+			p = self.head
+			for i in data[1:]:
+				node = Node(i)
+				p.next = node
+				node.prev = p
+				p = p.next
+			q = self.end
+			for i in data[-2::-1]:
+				node = Node(i)
+				q.prev = node
+				node.next = q
+				q = q.prev		
 
 	def getlength(self):
 		length = 0
@@ -58,8 +62,7 @@ class LinkList(object):
 			p = self.head
 			while p.next != 0:
 				p = p.next
-			p.next = q
-			q.prev = p
+			p.next = q			
 
 	def deappend(self,item):
 		q = Node(item)
@@ -128,12 +131,19 @@ class LinkList(object):
 			p.next.prev = post
 
 	def delhead(self):
-		p = self.head 
-		self.head = p.next
+		if self.head == 0:
+			print("Linklist is empty.")
+		else:
+			p = self.head 
+			self.head = p.next
 
 	def delend(self):
-		p = self.end
-		self.end = p.prev
+		if self.head == 0:
+			print("LinkList is empty.")
+		else:
+			p = self.end
+			print("??",p.data)
+			self.end = p.prev
 			
 	def index(self,value):
 		if self.is_empty():
@@ -154,25 +164,25 @@ class LinkList(object):
 			print(self.getitem(i))
 
 if __name__ == '__main__':
-	l=LinkList()
-	llist=[7,3,10,4,5,]
-	l.initlist(llist)
-
-	print(l.getlength())
-	print(l.is_empty())
-
+	l=LinkList([7,3,10,4,5,])
 	l.append(16)
+	l.show()
+	print("append",l.getlength())
 	l.deappend(24)
+	print("deappend",l.getlength())
+	l.show()
 	l.delhead()
 	l.show()
+	l.delend()
+	l.show()
 
-	l.insert(0,100)
-	print(l.index(10))
+	# l.insert(0,100)
+	# print(l.index(10))
 
-	print("getlength",l.getlength())
-	print(l.getitem(5))
-	l.clear()
-	print(l.getlength())
+	# print("getlength",l.getlength())
+	# print(l.getitem(5))
+	# l.clear()
+	# print(l.getlength())
 
 
 
